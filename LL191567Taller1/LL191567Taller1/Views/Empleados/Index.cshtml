@@ -1,0 +1,117 @@
+﻿@model IEnumerable<LL191567Taller1.Models.Empleado>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo empleado", "Create")
+
+    @using (Html.BeginForm())
+            {
+                <p>
+                    Codigo: @Html.DropDownList("codigoEmpleado", "All")
+                    Nombres: @Html.TextBox("BuscarNombre")
+                    Apellidos: @Html.TextBox("BuscarApellido") <br />
+                    <input type="submit" value="Filtrar" />
+                </p>
+            }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cargo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SueldoBase)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AñosLaborados)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bono)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellidos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaNacimiento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion)
+        </td>
+        <td align="left">
+            @Html.DisplayFor(modelItem => item.Telefono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cargo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SueldoBase)
+        </td>
+        <td align="center">
+            @Html.DisplayFor(modelItem => item.AñosLaborados)
+        </td>
+        <td>$
+            @{
+                decimal bono = 0;
+                if (item.AñosLaborados < 1)
+                {
+                    bono = 0;
+                }
+                else if (item.AñosLaborados >= 1 && item.AñosLaborados <= 3)
+                {
+                    bono = item.SueldoBase * 0.02m;
+                }
+                else if (item.AñosLaborados >= 3 && item.AñosLaborados <= 5)
+                {
+                    bono = item.SueldoBase * 0.035m;
+                }
+                else
+                {
+                    bono = item.SueldoBase * 0.05m;
+                }
+                item.Bono = bono;
+            }
+            @Html.DisplayFor(modelItem => item.Bono)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
